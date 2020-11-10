@@ -16,6 +16,7 @@ POWERLEVEL9K_DISABLE_RPROMPT=true
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="▶"
 POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir)
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -106,12 +107,61 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 export TERM=xterm-256color
 
+gitlog() {
+  git log --oneline --all --graph --decorate "$@"
+}
+
+gitpull() {
+  git pull "$@"
+}
+
+gitpush() {
+  git push "$@"
+}
+
+gitadd() {
+  git add "$@"
+}
+
+gitcommitm() {
+  git commit -m "$1"
+}
+
+dk() {
+  docker "$@"
+}
+
+alias dklogin="docker login"
+alias dklogout="docker logout"
+alias dkprune="docker system prune -a --volumes"
+
+dkc() {
+  docker-compose "$@"
+}
+
 dkcx() {
   docker-compose exec "$@"
 }
 
-alias dkcu="docker-compose up"
-alias dkcd="docker-compose down"
+alias dkcup="docker-compose up"
+alias dkcdown="docker-compose down"
 
-alias dkcst="docker-compose start"
-alias dkcsp="docker-compose stop"
+alias dkcstart="docker-compose start"
+alias dkcstop="docker-compose stop"
+
+ls_ext() {
+  if [ $# -eq 0 ]; then # if ls is called without any arguments
+    # make ls print full info, with color
+    ls -laF
+  else
+    ls $@ # otherwise call as intended
+  fi
+}
+
+alias ls="ls_ext"
+alias cdhome="cd ~"
+alias c="clear"
+alias cd..="cd .."
+alias ..="cd .."
+alias 2..="cd ../.."
+alias 3..="cd ../../.."
